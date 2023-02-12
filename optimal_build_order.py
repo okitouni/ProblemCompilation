@@ -28,7 +28,6 @@ def optimal_build(codebases, deps):
         # also pop things that finished at the same time
         while leaf_nodes and leaf_nodes[0][0] == 0:
             _, cb = heapq.heappop(leaf_nodes)
-            print(cb, end=", ")
             built.add(cb)
         # check if anything new can be built
         for codebase, time in codebases: # TODO stop checking every codebase adds an O(N) factor
@@ -41,7 +40,7 @@ def optimal_build(codebases, deps):
     print(f"Done! Time elapsed {t}s")
     return result
 
-codebases = [("A", 1), ("B", 1), ("C", 2), ("D", 2), ("E", 3)]
+codebases = [("A", 1), ("B", 1), ("C", 2), ("D", 2), ("E", 3), ("F", 1)]
 deps = {"A": ["B", "C"], "C":["D"]}
 print(*optimal_build(codebases, deps), sep='\n')
 
