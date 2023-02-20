@@ -19,7 +19,6 @@ def search(nums: list, target: int) -> int:
     high = len(nums)
 
     while low < high:
-        print(low, high)
         mid = (high + low) // 2
         if nums[mid] < target:
             low = mid + 1
