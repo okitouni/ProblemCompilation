@@ -6,7 +6,7 @@
 def search(nums: list, target: int) -> int:
     """Find target in sorted list nums. 
     Returns the index of the first instance of target or an index i such that
-    target >= nums[i:].
+    target <= nums[i:].
 
     Args:
         nums (list): Sorted list to search.
