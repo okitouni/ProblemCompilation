@@ -21,3 +21,36 @@
 # If the current grid has the same value (i.e all 1's or all 0's) set isLeaf True and set val to the value of the grid and set the four children to Null and stop.
 # If the current grid has different values, set isLeaf to False and set val to any value and divide the current grid into four sub-grids as shown in the photo.
 # Recurse for each of the children with the proper sub-grid.
+from typing import List
+
+class Node:
+    def __init__(self, val, isLeaf, topLeft, topRight, bottomLeft, bottomRight):
+        self.val = val
+        self.isLeaf = isLeaf
+        self.topLeft = topLeft
+        self.topRight = topRight
+        self.bottomLeft = bottomLeft
+        self.bottomRight = bottomRight
+    
+    def __repr__(self):
+        return f'Node({self.val}, {self.isLeaf}, {self.topLeft}, {self.topRight}, {self.bottomLeft}, {self.bottomRight})'
+
+class Solution:
+    def construct(self, grid: List[List[int]]) -> 'Node':
+        def dfs(grid):
+            if len(grid) == 1:
+                return Node(grid[0][0], True, None, None, None, None)
+            n = len(grid)
+            topLeft = dfs([row[:n//2] for row in grid[:n//2]])
+            topRight = dfs([row[n//2:] for row in grid[:n//2]])
+            bottomLeft = dfs([row[:n//2] for row in grid[n//2:]])
+            bottomRight = dfs([row[n//2:] for row in grid[n//2:]])
+            if topLeft.isLeaf and topRight.isLeaf and bottomLeft.isLeaf and bottomRight.isLeaf and topLeft.val == topRight.val == bottomLeft.val == bottomRight.val:
+                return Node(topLeft.val, True, None, None, None, None)
+            return Node(False, False, topLeft, topRight, bottomLeft, bottomRight)
+        return dfs(grid)
+
+if __name__ == '__main__':
+    solution = Solution()
+    grid = [[0,1],[1,0]]
+    print(solution.construct(grid))
