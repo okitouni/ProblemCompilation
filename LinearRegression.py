@@ -5,8 +5,6 @@ from scipy.stats import linregress
 from sklearn.linear_model import LinearRegression
 import itertools
 # %%
-
-
 def get_data(
     nsamples=500,
     ndim=2,
@@ -74,10 +72,10 @@ for corr in corr_list:
     X_true, y = get_data(
         correlation=corr,
         intrinsic_noise=0.0,
-        std=[1, 1],
+        std=[2, 1],
         ndim=2,
         nsamples=500,
-        coefficients=np.array([[1.1], [1]]),
+        coefficients=np.array([[1.], [1]]),
     )
     X = X_true[:, :1]
     solution = Regressor(X, y)
@@ -91,17 +89,18 @@ for corr in corr_list:
     solution = Regressor(X, y)
     R2_list3.append(solution.R2)
 ax = plt.subplot(111)
-ax.plot(corr_list, R2_list)
-ax.plot(corr_list, R2_list2, ls="--")
-ax.plot(corr_list, R2_list3, ls=":", lw=3, c="red")
+ax.plot(corr_list, R2_list, c='blue', label="first feature")
+ax.plot(corr_list, R2_list2, c='green', label="second feature")
+ax.plot(corr_list, R2_list3, lw=3, c="red", label="both features")
 ax.set_xlabel("Correlation")
 ax.set_ylabel("R2")
 ax.set_ylim(0, 1 + 1e-3)
 ax1 = ax.twinx()
-ax1.plot(corr_list, betas, "r")
-ax1.plot(corr_list, betas2, "r", ls="--")
+ax1.plot(corr_list, betas, "b", ls="--")
+ax1.plot(corr_list, betas2, "g", ls="--")
 ax1.spines["right"].set_color("red")
 ax1.set_ylabel("Beta")
+ax.legend()
 plt.show()
 # %%
 class Regressor:
@@ -165,3 +164,5 @@ inv = np.linalg.pinv(mat)
 print("inv", inv, sep="\n")
 print("inv @ mat", inv @ mat, sep="\n")
 print("mat @ inv", mat @ inv, sep="\n")
+
+# %%
