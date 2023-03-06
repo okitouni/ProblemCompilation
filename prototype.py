@@ -33,3 +33,11 @@ print(f"cosine similarity: {cosine}")
 
 
 # %%
+from collections import Counter
+
+c = Counter(range(1, 5))
+arr = list([2,3,4,7,11])
+Counter(range(1, arr[-1]+1)) - Counter(arr) 
+
+
+# %%
