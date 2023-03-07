@@ -1,0 +1,43 @@
+# import heapq
+from typing import List
+
+class Solution:
+    def minimumTime(self, time: List[int], totalTrips: int) -> int:
+        # q = [(t, t) for t in time]
+        # heapq.heapify(q)
+        # time_elapsed = 0
+        # while totalTrips > 0:
+        #     t = q[0][0]
+        #     q = [(rem-t, orig_time) for (rem, orig_time) in q]
+        #     while q and q[0][0] <= 0:
+        #         heapq.heapreplace(q, (q[0][1],q[0][1]))
+        #         totalTrips -= 1
+        #     time_elapsed += t
+        # return time_elapsed
+
+        # literally binary search for the time
+        def is_too_long(t):
+            total_trips_in_t = 0
+            for bus_time in time:
+                total_trips_in_t += t//bus_time
+                if total_trips_in_t >= totalTrips:
+                    return True
+            return False
+
+
+        l = 1
+        u = min(time)*totalTrips
+        time.sort()
+
+        while l < u:
+            print(l, u)
+            mid = (l+u)//2
+            if is_too_long(mid):
+                u = mid
+            else:
+                l = mid + 1 
+        return u
+
+if __name__ == "__main__":
+    s = Solution()
+    print(s.minimumTime([1,2,4], 3))
