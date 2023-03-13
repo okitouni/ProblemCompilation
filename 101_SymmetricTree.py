@@ -36,13 +36,12 @@ class TestSolution(unittest.TestCase):
         return root
         
     def setUp(self):
-        self.test_cases = [([1,2,2,3,4,4,3], True)]
+        self.test_cases = [([1,2,2,3,4,4,3], True), ([1,2,2,None,3,None,3], False)]
         self.s = Solution()
     
     def test_isSymmetric(self):
         for i, e in self.test_cases:
             root = self.make_tree(i)
-            print("testing", root)
             self.assertEqual(self.s.isSymmetric(root), e)
 
 if __name__ == '__main__':
