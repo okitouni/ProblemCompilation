@@ -1,0 +1,44 @@
+# 2385. Amount of Time for Binary Tree to Be Infected
+# You are given the root of a binary tree with unique values, and an integer start. At minute 0, an infection starts from the node with value start.
+
+# Each minute, a node becomes infected if:
+
+# The node is currently uninfected.
+# The node is adjacent to an infected node.
+# Return the number of minutes needed for the entire tree to be infected.
+from typing import Optional
+
+
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+
+class Solution:
+    def amountOfTime(self, root: Optional[TreeNode], start: int) -> int:
+        def dfs(node, parent=None):
+            if node is not None:
+                left, right = dfs(node.left, node), dfs(node.right, node)
+                if node.val == start:
+                    start_node = node
+                else:
+                    start_node = left or right
+                # cool hack to avoid making a new class (actually terrible in real life)
+                node.val = parent
+                return start_node
+
+        start_node = dfs(root)
+
+        visited = set()
+
+        def dfs(node):
+            if node is not None and node not in visited:
+                visited.add(node)
+                left = dfs(node.left) or 0
+                right = dfs(node.right) or 0
+                parent = dfs(node.val) or 0
+                return max(left, right, parent) + 1
+
+        return dfs(start_node) - 1
