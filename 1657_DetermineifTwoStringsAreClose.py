@@ -19,4 +19,4 @@ class Solution:
             return False
         if sorted(list(counter1.values())) != sorted(list(counter2.values())):
             return False
-        return Tru
+        return True
